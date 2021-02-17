@@ -1,7 +1,6 @@
 package edu.vladix0777.studentorder.domain;
 
 import java.util.Date;
-import java.util.Locale;
 
 public class Adult extends Person{
     private String passportSeria;
@@ -11,6 +10,9 @@ public class Adult extends Person{
     private String university;
     private String studentId;
 
+    public Adult () {
+
+    }
 
     public String getStudentId() {
         return studentId;

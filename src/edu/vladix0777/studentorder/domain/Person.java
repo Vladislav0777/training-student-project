@@ -6,6 +6,10 @@ public class Person {
     private String patronymic;
     private String dateOrBirth;
 
+    public Person() {
+        System.out.println("Person is created");
+    }
+
     public String getPersonString() {
         return surName + " " + givenName;
     }
