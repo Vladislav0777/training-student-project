@@ -56,23 +56,4 @@ public class StudentOrderValidator {
     static void sendMail (StudentOrder so) {
         new MailSender().sendMail(so);
     }
-
-    public static class SaveStudentOrder
-    {
-        public static void main(String[] args) {
-            StudentOrder so = new StudentOrder();
-            so.hFirstName = "";
-            so.hFirstName = "";
-            so.hFirstName = "";
-            so.hFirstName = "";
-
-            long ans = saveStudentOrder(so);
-            System.out.println(ans);
-        }
-        static long saveStudentOrder (StudentOrder studentOrder) {
-            long answer = 199;
-            System.out.println("saveStudentOrder:" + studentOrder.hLastName);
-            return answer;
-        }
-    }
 }
