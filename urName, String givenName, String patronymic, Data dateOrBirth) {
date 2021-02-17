@@ -1,0 +1,974 @@
+[33mcommit 5d7057aa077b2f70022b7ca8770f8e1b37f18e97[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Vladislav Zaitsev <zaycev.vlad.c@gmail.com>
+Date:   Wed Feb 17 19:43:17 2021 +0300
+
+    There were some changes made in StudentOrderValidator, Adult, Person classes
+
+[1mdiff --git a/src/edu/vladix0777/studentorder/StudentOrderValidator.java b/src/edu/vladix0777/studentorder/StudentOrderValidator.java[m
+[1mindex 6f8b6d5..6861177 100644[m
+[1m--- a/src/edu/vladix0777/studentorder/StudentOrderValidator.java[m
+[1m+++ b/src/edu/vladix0777/studentorder/StudentOrderValidator.java[m
+[36m@@ -8,10 +8,26 @@[m [mimport edu.vladix0777.studentorder.validator.StudentValidator;[m
+ import edu.vladix0777.studentorder.validator.WeddingValidator;[m
+ [m
+ public class StudentOrderValidator {[m
+[32m+[m
+[32m+[m[32m    private CityRegisterValidator cityRegisterValidator;[m
+[32m+[m[32m    private WeddingValidator weddingValidator;[m
+[32m+[m[32m    private ChildrenValidator childrenValidator;[m
+[32m+[m[32m    private StudentValidator studentValidator;[m
+[32m+[m[32m    private MailSender mailSender;[m
+[32m+[m
+[32m+[m[32m    public StudentOrderValidator () {[m
+[32m+[m[32m        cityRegisterValidator = new CityRegisterValidator();[m
+[32m+[m[32m        weddingValidator = new WeddingValidator();[m
+[32m+[m[32m        childrenValidator = new ChildrenValidator();[m
+[32m+[m[32m        studentValidator = new StudentValidator();[m
+[32m+[m[32m        mailSender = new MailSender();[m
+[32m+[m[32m    }[m
+[32m+[m
+     public static void main(String[] args) {[m
+[31m-        checkAll();[m
+[32m+[m[32m        StudentOrderValidator studentOderVal = new StudentOrderValidator();[m
+[32m+[m[32m        studentOderVal.checkAll();[m
+     }[m
+[31m-    static void checkAll() {[m
+[32m+[m[32m    public void checkAll() {[m
+ [m
+         while (true) {[m
+             StudentOrder so = readStudentOrder();[m
+[36m@@ -29,31 +45,23 @@[m [mpublic class StudentOrderValidator {[m
+         }[m
+     }[m
+ [m
+[31m-    static StudentOrder readStudentOrder() {[m
+[32m+[m[32m    public StudentOrder readStudentOrder() {[m
+         StudentOrder so = new StudentOrder();[m
+         return so;[m
+     }[m
+[31m-    static AnswerCityRegister checkCityRegister (StudentOrder so) {[m
+[31m-        CityRegisterValidator citiRegVal = new CityRegisterValidator();[m
+[31m-        citiRegVal.hostName = "host1";[m
+[31m-        citiRegVal.login = "admin";[m
+[31m-        citiRegVal.password = "111";[m
+[31m-        AnswerCityRegister ansCit = citiRegVal.checkCityRegister(so);[m
+[31m-        return ansCit;[m
+[32m+[m[32m    public AnswerCityRegister checkCityRegister (StudentOrder so) {[m
+[32m+[m[32m        return cityRegisterValidator.checkCityRegister(so);[m
+     }[m
+[31m-    static AnswerWedding checkWedding (StudentOrder so) {[m
+[31m-        WeddingValidator wedVal = new WeddingValidator();[m
+[31m-        return wedVal.checkWedding(so);[m
+[32m+[m[32m    public AnswerWedding checkWedding (StudentOrder so) {[m
+[32m+[m[32m        return weddingValidator.checkWedding(so);[m
+     }[m
+[31m-    static AnswerChildren checkChildren (StudentOrder so) {[m
+[31m-        ChildrenValidator childVal = new ChildrenValidator();[m
+[31m-        return childVal.checkChildren(so);[m
+[32m+[m[32m    public AnswerChildren checkChildren (StudentOrder so) {[m
+[32m+[m[32m        return childrenValidator.checkChildren(so);[m
+     }[m
+[31m-    static AnswerStudent checkStudent (StudentOrder so) {[m
+[31m-        StudentValidator studentVal = new StudentValidator();[m
+[31m-        return studentVal.checkStudent(so);[m
+[32m+[m[32m    public AnswerStudent checkStudent (StudentOrder so) {[m
+[32m+[m[32m        return studentValidator.checkStudent(so);[m
+     }[m
+[31m-    static void sendMail (StudentOrder so) {[m
+[31m-        new MailSender().sendMail(so);[m
+[32m+[m[32m    public void sendMail (StudentOrder so) {[m
+[32m+[m[32m        mailSender.sendMail(so);[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/Adult.java b/src/edu/vladix0777/studentorder/domain/Adult.java[m
+[1mindex 608b57e..c834ad8 100644[m
+[1m--- a/src/edu/vladix0777/studentorder/domain/Adult.java[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/Adult.java[m
+[36m@@ -1,7 +1,6 @@[m
+ package edu.vladix0777.studentorder.domain;[m
+ [m
+ import java.util.Date;[m
+[31m-import java.util.Locale;[m
+ [m
+ public class Adult extends Person{[m
+     private String passportSeria;[m
+[36m@@ -11,6 +10,9 @@[m [mpublic class Adult extends Person{[m
+     private String university;[m
+     private String studentId;[m
+ [m
+[32m+[m[32m    public Adult () {[m
+[32m+[m
+[32m+[m[32m    }[m
+ [m
+     public String getStudentId() {[m
+         return studentId;[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/Person.java b/src/edu/vladix0777/studentorder/domain/Person.java[m
+[1mindex 31cf686..db221d9 100644[m
+[1m--- a/src/edu/vladix0777/studentorder/domain/Person.java[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/Person.java[m
+[36m@@ -6,6 +6,10 @@[m [mpublic class Person {[m
+     private String patronymic;[m
+     private String dateOrBirth;[m
+ [m
+[32m+[m[32m    public Person() {[m
+[32m+[m[32m        System.out.println("Person is created");[m
+[32m+[m[32m    }[m
+[32m+[m
+     public String getPersonString() {[m
+         return surName + " " + givenName;[m
+     }[m
+
+[33mcommit 51d18110083fd697c7d1f9cf9b54fadc5222d474[m
+Author: Vladislav Zaitsev <zaycev.vlad.c@gmail.com>
+Date:   Wed Feb 17 17:11:44 2021 +0300
+
+    add file .gitignore
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9f11b75[m
+[1m--- /dev/null[m
+[1m+++ b/.gitignore[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m.idea/[m
+
+[33mcommit f42a1de915629fe32f0a5ee5ad4677f9a1986419[m
+Author: Vladislav Zaitsev <zaycev.vlad.c@gmail.com>
+Date:   Wed Feb 17 16:47:22 2021 +0300
+
+    add new very much classes and everything works
+
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerChildren.class b/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerChildren.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7f095ba[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerChildren.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerCityRegister.class b/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerCityRegister.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2b69df5[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerCityRegister.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerStudent.class b/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerStudent.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..41eaee8[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerStudent.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerWedding.class b/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerWedding.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..43e06a0[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/domain/AnswerWedding.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/domain/StudentOrder.class b/out/production/student-project/edu/vladix0777/studentorder/domain/StudentOrder.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8c9a15a[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/domain/StudentOrder.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/mail/MailSender.class b/out/production/student-project/edu/vladix0777/studentorder/mail/MailSender.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..78550dc[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/mail/MailSender.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/validator/ChildrenValidator.class b/out/production/student-project/edu/vladix0777/studentorder/validator/ChildrenValidator.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ea86d60[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/validator/ChildrenValidator.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/validator/CityRegisterValidator.class b/out/production/student-project/edu/vladix0777/studentorder/validator/CityRegisterValidator.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..136bcb2[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/validator/CityRegisterValidator.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/validator/StudentValidator.class b/out/production/student-project/edu/vladix0777/studentorder/validator/StudentValidator.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f6e46e5[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/validator/StudentValidator.class differ
+[1mdiff --git a/out/production/student-project/edu/vladix0777/studentorder/validator/WeddingValidator.class b/out/production/student-project/edu/vladix0777/studentorder/validator/WeddingValidator.class[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3fd0e43[m
+Binary files /dev/null and b/out/production/student-project/edu/vladix0777/studentorder/validator/WeddingValidator.class differ
+[1mdiff --git a/src/edu/vladix0777/studentorder/SaveStudentOrder.java b/src/edu/vladix0777/studentorder/SaveStudentOrder.java[m
+[1mindex e31f2e2..885953f 100644[m
+[1m--- a/src/edu/vladix0777/studentorder/SaveStudentOrder.java[m
+[1m+++ b/src/edu/vladix0777/studentorder/SaveStudentOrder.java[m
+[36m@@ -1,22 +1,29 @@[m
+ package edu.vladix0777.studentorder;[m
+ [m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.Adult;[m
+ import edu.vladix0777.studentorder.domain.StudentOrder;[m
+ [m
+ public class SaveStudentOrder[m
+ {[m
+     public static void main(String[] args) {[m
+         StudentOrder so = new StudentOrder();[m
+[31m-        so.hFirstName = "";[m
+[31m-        so.hFirstName = "";[m
+[31m-        so.hFirstName = "";[m
+[31m-        so.hFirstName = "";[m
+ [m
+         long ans = saveStudentOrder(so);[m
+         System.out.println(ans);[m
+     }[m
+     static long saveStudentOrder (StudentOrder studentOrder) {[m
+         long answer = 199;[m
+[31m-        System.out.println("saveStudentOrder:" + studentOrder.hLastName);[m
+[32m+[m[32m        System.out.println("saveStudentOrder");[m
+         return answer;[m
+     }[m
+[32m+[m
+[32m+[m[32m    static  StudentOrder buildStudentOrder() {[m
+[32m+[m[32m        StudentOrder so = new StudentOrder();[m
+[32m+[m[32m        Adult husband = new Adult();[m
+[32m+[m[32m        husband.setGivenName("Andrey");[m
+[32m+[m[32m        so.setHusband(husband);[m
+[32m+[m
+[32m+[m[32m        husband.getPersonString();[m
+[32m+[m[32m        return so;[m
+[32m+[m[32m    }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/StudentOrderValidator.java b/src/edu/vladix0777/studentorder/StudentOrderValidator.java[m
+[1mindex 1496a21..6f8b6d5 100644[m
+[1m--- a/src/edu/vladix0777/studentorder/StudentOrderValidator.java[m
+[1m+++ b/src/edu/vladix0777/studentorder/StudentOrderValidator.java[m
+[36m@@ -56,23 +56,4 @@[m [mpublic class StudentOrderValidator {[m
+     static void sendMail (StudentOrder so) {[m
+         new MailSender().sendMail(so);[m
+     }[m
+[31m-[m
+[31m-    public static class SaveStudentOrder[m
+[31m-    {[m
+[31m-        public static void main(String[] args) {[m
+[31m-            StudentOrder so = new StudentOrder();[m
+[31m-            so.hFirstName = "";[m
+[31m-            so.hFirstName = "";[m
+[31m-            so.hFirstName = "";[m
+[31m-            so.hFirstName = "";[m
+[31m-[m
+[31m-            long ans = saveStudentOrder(so);[m
+[31m-            System.out.println(ans);[m
+[31m-        }[m
+[31m-        static long saveStudentOrder (StudentOrder studentOrder) {[m
+[31m-            long answer = 199;[m
+[31m-            System.out.println("saveStudentOrder:" + studentOrder.hLastName);[m
+[31m-            return answer;[m
+[31m-        }[m
+[31m-    }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/Adress.java b/src/edu/vladix0777/studentorder/domain/Adress.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ee4041e[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/Adress.java[m
+[36m@@ -0,0 +1,49 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mpublic class Adress {[m
+[32m+[m[32m    private String street;[m
+[32m+[m[32m    private String building;[m
+[32m+[m[32m    private String extension;[m
+[32m+[m[32m    private String apartment;[m
+[32m+[m[32m    private String postCode;[m
+[32m+[m
+[32m+[m[32m    public String getPostCode() {[m
+[32m+[m[32m        return postCode;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setPostCode(String postCode) {[m
+[32m+[m[32m        this.postCode = postCode;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getStreet() {[m
+[32m+[m[32m        return street;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setStreet(String street) {[m
+[32m+[m[32m        this.street = street;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getBuilding() {[m
+[32m+[m[32m        return building;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setBuilding(String building) {[m
+[32m+[m[32m        this.building = building;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getExtension() {[m
+[32m+[m[32m        return extension;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setExtension(String extension) {[m
+[32m+[m[32m        this.extension = extension;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getApartment() {[m
+[32m+[m[32m        return apartment;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setApartment(String apartment) {[m
+[32m+[m[32m        this.apartment = apartment;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/Adult.java b/src/edu/vladix0777/studentorder/domain/Adult.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..608b57e[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/Adult.java[m
+[36m@@ -0,0 +1,62 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mimport java.util.Date;[m
+[32m+[m[32mimport java.util.Locale;[m
+[32m+[m
+[32m+[m[32mpublic class Adult extends Person{[m
+[32m+[m[32m    private String passportSeria;[m
+[32m+[m[32m    private String passportNumber;[m
+[32m+[m[32m    private Date issueDate;[m
+[32m+[m[32m    private String issueDepartment;[m
+[32m+[m[32m    private String university;[m
+[32m+[m[32m    private String studentId;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    public String getStudentId() {[m
+[32m+[m[32m        return studentId;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setStudentId(String studentId) {[m
+[32m+[m[32m        this.studentId = studentId;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getUniversity() {[m
+[32m+[m[32m        return university;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setUniversity(String university) {[m
+[32m+[m[32m        this.university = university;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getPassporSeria() {[m
+[32m+[m[32m        return passportSeria;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setPassporSeria(String passporSeria) {[m
+[32m+[m[32m        this.passportSeria = passporSeria;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getPassportNumber() {[m
+[32m+[m[32m        return passportNumber;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setPassportNumber(String passportNumber) {[m
+[32m+[m[32m        this.passportNumber = passportNumber;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public Date getIssueDate() {[m
+[32m+[m[32m        return issueDate;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setIssueDate(Date issueDate) {[m
+[32m+[m[32m        this.issueDate = issueDate;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getIssueDepartment() {[m
+[32m+[m[32m        return issueDepartment;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setIssueDepartment(String issueDepartment) {[m
+[32m+[m[32m        this.issueDepartment = issueDepartment;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/Child.java b/src/edu/vladix0777/studentorder/domain/Child.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c391bdc[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/Child.java[m
+[36m@@ -0,0 +1,33 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mimport java.util.Date;[m
+[32m+[m
+[32m+[m[32mpublic class Child extends Person{[m
+[32m+[m[32m    private String certificateNumber;[m
+[32m+[m[32m    private Date issueDate;[m
+[32m+[m[32m    private String issueDepartment;[m
+[32m+[m
+[32m+[m[32m    public String getCertificateNumber() {[m
+[32m+[m[32m        return certificateNumber;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setCertificateNumber(String certificateNumber) {[m
+[32m+[m[32m        this.certificateNumber = certificateNumber;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public Date getIssueDate() {[m
+[32m+[m[32m        return issueDate;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setIssueDate(Date issueDate) {[m
+[32m+[m[32m        this.issueDate = issueDate;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getIssueDepartment() {[m
+[32m+[m[32m        return issueDepartment;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setIssueDepartment(String issueDepartment) {[m
+[32m+[m[32m        this.issueDepartment = issueDepartment;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/Person.java b/src/edu/vladix0777/studentorder/domain/Person.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..31cf686[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/Person.java[m
+[36m@@ -0,0 +1,44 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mpublic class Person {[m
+[32m+[m[32m    private String surName;[m
+[32m+[m[32m    private String givenName;[m
+[32m+[m[32m    private String patronymic;[m
+[32m+[m[32m    private String dateOrBirth;[m
+[32m+[m
+[32m+[m[32m    public String getPersonString() {[m
+[32m+[m[32m        return surName + " " + givenName;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getSurName() {[m
+[32m+[m[32m        return surName;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setSurName(String surName) {[m
+[32m+[m[32m        this.surName = surName;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getGivenName() {[m
+[32m+[m[32m        return givenName;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setGivenName(String givenName) {[m
+[32m+[m[32m        this.givenName = givenName;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getPatronymic() {[m
+[32m+[m[32m        return patronymic;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setPatronymic(String patronymic) {[m
+[32m+[m[32m        this.patronymic = patronymic;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getDateOrBirth() {[m
+[32m+[m[32m        return dateOrBirth;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setDateOrBirth(String dateOrBirth) {[m
+[32m+[m[32m        this.dateOrBirth = dateOrBirth;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/StudentOrder.java b/src/edu/vladix0777/studentorder/domain/StudentOrder.java[m
+[1mindex 50738d9..351eade 100644[m
+[1m--- a/src/edu/vladix0777/studentorder/domain/StudentOrder.java[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/StudentOrder.java[m
+[36m@@ -2,8 +2,40 @@[m [mpackage edu.vladix0777.studentorder.domain;[m
+ [m
+ public class StudentOrder[m
+ {[m
+[31m-    public String hFirstName;[m
+[31m-    public String hLastName;[m
+[31m-    public String wFirstName;[m
+[31m-    public String wLastName;[m
+[32m+[m[32m    private long studentOrderId;[m
+[32m+[m[32m    private Adult husband;[m
+[32m+[m[32m    private Adult wife;[m
+[32m+[m[32m    private Child child;[m
+[32m+[m
+[32m+[m[32m    public long getStudentOrderId() {[m
+[32m+[m[32m        return studentOrderId;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setStudentOrderId(long studentOrderId) {[m
+[32m+[m[32m        this.studentOrderId = studentOrderId;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public Adult getHusband() {[m
+[32m+[m[32m        return husband;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setHusband(Adult husband) {[m
+[32m+[m[32m        this.husband = husband;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public Adult getWife() {[m
+[32m+[m[32m        return wife;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setWife(Adult wife) {[m
+[32m+[m[32m        this.wife = wife;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public Child getChild() {[m
+[32m+[m[32m        return child;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setChild(Child child) {[m
+[32m+[m[32m        this.child = child;[m
+[32m+[m[32m    }[m
+ }[m
+
+[33mcommit b5a6eb5887b023edfa5d4c860254cd435d799890[m
+Author: Vladislav0777 <zaycev.vlad.c@gmail.com>
+Date:   Mon Feb 15 12:04:59 2021 +0300
+
+    Version 1
+
+[1mdiff --git a/.idea/.gitignore b/.idea/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..26d3352[m
+[1m--- /dev/null[m
+[1m+++ b/.idea/.gitignore[m
+[36m@@ -0,0 +1,3 @@[m
+[32m+[m[32m# Default ignored files[m
+[32m+[m[32m/shelf/[m
+[32m+[m[32m/workspace.xml[m
+[1mdiff --git a/.idea/.name b/.idea/.name[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6a1381c[m
+[1m--- /dev/null[m
+[1m+++ b/.idea/.name[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32mstudent-project[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/misc.xml b/.idea/misc.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..35fb8b9[m
+[1m--- /dev/null[m
+[1m+++ b/.idea/misc.xml[m
+[36m@@ -0,0 +1,6 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?>[m
+[32m+[m[32m<project version="4">[m
+[32m+[m[32m  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="15" project-jdk-type="JavaSDK">[m
+[32m+[m[32m    <output url="file://$PROJECT_DIR$/out" />[m
+[32m+[m[32m  </component>[m
+[32m+[m[32m</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/modules.xml b/.idea/modules.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2fdad20[m
+[1m--- /dev/null[m
+[1m+++ b/.idea/modules.xml[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?>[m
+[32m+[m[32m<project version="4">[m
+[32m+[m[32m  <component name="ProjectModuleManager">[m
+[32m+[m[32m    <modules>[m
+[32m+[m[32m      <module fileurl="file://$PROJECT_DIR$/student-project.iml" filepath="$PROJECT_DIR$/student-project.iml" />[m
+[32m+[m[32m    </modules>[m
+[32m+[m[32m  </component>[m
+[32m+[m[32m</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/uiDesigner.xml b/.idea/uiDesigner.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e96534f[m
+[1m--- /dev/null[m
+[1m+++ b/.idea/uiDesigner.xml[m
+[36m@@ -0,0 +1,124 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?>[m
+[32m+[m[32m<project version="4">[m
+[32m+[m[32m  <component name="Palette2">[m
+[32m+[m[32m    <group name="Swing">[m
+[32m+[m[32m      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />[m
+[32m+[m[32m        <initial-values>[m
+[32m+[m[32m          <property name="text" value="Button" />[m
+[32m+[m[32m        </initial-values>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />[m
+[32m+[m[32m        <initial-values>[m
+[32m+[m[32m          <property name="text" value="RadioButton" />[m
+[32m+[m[32m        </initial-values>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />[m
+[32m+[m[32m        <initial-values>[m
+[32m+[m[32m          <property name="text" value="CheckBox" />[m
+[32m+[m[32m        </initial-values>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />[m
+[32m+[m[32m        <initial-values>[m
+[32m+[m[32m          <property name="text" value="Label" />[m
+[32m+[m[32m        </initial-values>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">[m
+[32m+[m[32m          <preferred-size width="150" height="-1" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">[m
+[32m+[m[32m          <preferred-size width="150" height="-1" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">[m
+[32m+[m[32m          <preferred-size width="150" height="-1" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[32m+[m[32m          <preferred-size width="150" height="50" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[32m+[m[32m          <preferred-size width="150" height="50" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[32m+[m[32m          <preferred-size width="150" height="50" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[32m+[m[32m          <preferred-size width="150" height="50" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">[m
+[32m+[m[32m          <preferred-size width="150" height="50" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[32m+[m[32m          <preferred-size width="150" height="50" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">[m
+[32m+[m[32m          <preferred-size width="200" height="200" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">[m
+[32m+[m[32m          <preferred-size width="200" height="200" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">[m
+[32m+[m[32m          <preferred-size width="-1" height="20" />[m
+[32m+[m[32m        </default-constraints>[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[32m+[m[32m        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />[m
+[32m+[m[32m      </item>[m
+[32m+[m[32m    </group>[m
+[32m+[m[32m  </component>[m
+[32m+[m[32m</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/SaveStudentOrder.java b/src/edu/vladix0777/studentorder/SaveStudentOrder.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e31f2e2[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/SaveStudentOrder.java[m
+[36m@@ -0,0 +1,22 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder;[m
+[32m+[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.StudentOrder;[m
+[32m+[m
+[32m+[m[32mpublic class SaveStudentOrder[m
+[32m+[m[32m{[m
+[32m+[m[32m    public static void main(String[] args) {[m
+[32m+[m[32m        StudentOrder so = new StudentOrder();[m
+[32m+[m[32m        so.hFirstName = "";[m
+[32m+[m[32m        so.hFirstName = "";[m
+[32m+[m[32m        so.hFirstName = "";[m
+[32m+[m[32m        so.hFirstName = "";[m
+[32m+[m
+[32m+[m[32m        long ans = saveStudentOrder(so);[m
+[32m+[m[32m        System.out.println(ans);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    static long saveStudentOrder (StudentOrder studentOrder) {[m
+[32m+[m[32m        long answer = 199;[m
+[32m+[m[32m        System.out.println("saveStudentOrder:" + studentOrder.hLastName);[m
+[32m+[m[32m        return answer;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/StudentOrderValidator.java b/src/edu/vladix0777/studentorder/StudentOrderValidator.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1496a21[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/StudentOrderValidator.java[m
+[36m@@ -0,0 +1,78 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder;[m
+[32m+[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.*;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.mail.MailSender;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.validator.ChildrenValidator;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.validator.CityRegisterValidator;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.validator.StudentValidator;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.validator.WeddingValidator;[m
+[32m+[m
+[32m+[m[32mpublic class StudentOrderValidator {[m
+[32m+[m[32m    public static void main(String[] args) {[m
+[32m+[m[32m        checkAll();[m
+[32m+[m[32m    }[m
+[32m+[m[32m    static void checkAll() {[m
+[32m+[m
+[32m+[m[32m        while (true) {[m
+[32m+[m[32m            StudentOrder so = readStudentOrder();[m
+[32m+[m[32m            System.out.println("start");[m
+[32m+[m[32m            if(so == null){[m
+[32m+[m[32m                break;[m
+[32m+[m[32m            }[m
+[32m+[m[32m            System.out.println("finish");[m
+[32m+[m[32m            AnswerCityRegister citiAnswer = checkCityRegister(so);[m
+[32m+[m[32m            AnswerWedding wedAnswer = checkWedding(so);[m
+[32m+[m[32m            AnswerChildren childAnswer = checkChildren(so);[m
+[32m+[m[32m            AnswerStudent studentAnswer = checkStudent(so);[m
+[32m+[m
+[32m+[m[32m            sendMail(so);[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    static StudentOrder readStudentOrder() {[m
+[32m+[m[32m        StudentOrder so = new StudentOrder();[m
+[32m+[m[32m        return so;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    static AnswerCityRegister checkCityRegister (StudentOrder so) {[m
+[32m+[m[32m        CityRegisterValidator citiRegVal = new CityRegisterValidator();[m
+[32m+[m[32m        citiRegVal.hostName = "host1";[m
+[32m+[m[32m        citiRegVal.login = "admin";[m
+[32m+[m[32m        citiRegVal.password = "111";[m
+[32m+[m[32m        AnswerCityRegister ansCit = citiRegVal.checkCityRegister(so);[m
+[32m+[m[32m        return ansCit;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    static AnswerWedding checkWedding (StudentOrder so) {[m
+[32m+[m[32m        WeddingValidator wedVal = new WeddingValidator();[m
+[32m+[m[32m        return wedVal.checkWedding(so);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    static AnswerChildren checkChildren (StudentOrder so) {[m
+[32m+[m[32m        ChildrenValidator childVal = new ChildrenValidator();[m
+[32m+[m[32m        return childVal.checkChildren(so);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    static AnswerStudent checkStudent (StudentOrder so) {[m
+[32m+[m[32m        StudentValidator studentVal = new StudentValidator();[m
+[32m+[m[32m        return studentVal.checkStudent(so);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    static void sendMail (StudentOrder so) {[m
+[32m+[m[32m        new MailSender().sendMail(so);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public static class SaveStudentOrder[m
+[32m+[m[32m    {[m
+[32m+[m[32m        public static void main(String[] args) {[m
+[32m+[m[32m            StudentOrder so = new StudentOrder();[m
+[32m+[m[32m            so.hFirstName = "";[m
+[32m+[m[32m            so.hFirstName = "";[m
+[32m+[m[32m            so.hFirstName = "";[m
+[32m+[m[32m            so.hFirstName = "";[m
+[32m+[m
+[32m+[m[32m            long ans = saveStudentOrder(so);[m
+[32m+[m[32m            System.out.println(ans);[m
+[32m+[m[32m        }[m
+[32m+[m[32m        static long saveStudentOrder (StudentOrder studentOrder) {[m
+[32m+[m[32m            long answer = 199;[m
+[32m+[m[32m            System.out.println("saveStudentOrder:" + studentOrder.hLastName);[m
+[32m+[m[32m            return answer;[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/AnswerChildren.java b/src/edu/vladix0777/studentorder/domain/AnswerChildren.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..023d3e3[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/AnswerChildren.java[m
+[36m@@ -0,0 +1,4 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mpublic class AnswerChildren {[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/AnswerCityRegister.java b/src/edu/vladix0777/studentorder/domain/AnswerCityRegister.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..50a1b5c[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/AnswerCityRegister.java[m
+[36m@@ -0,0 +1,5 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mpublic class AnswerCityRegister {[m
+[32m+[m[32m    boolean success;[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/AnswerStudent.java b/src/edu/vladix0777/studentorder/domain/AnswerStudent.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..94a1a4f[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/AnswerStudent.java[m
+[36m@@ -0,0 +1,4 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mpublic class AnswerStudent {[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/AnswerWedding.java b/src/edu/vladix0777/studentorder/domain/AnswerWedding.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..cf1ec65[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/AnswerWedding.java[m
+[36m@@ -0,0 +1,4 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mpublic class AnswerWedding {[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/domain/StudentOrder.java b/src/edu/vladix0777/studentorder/domain/StudentOrder.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..50738d9[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/domain/StudentOrder.java[m
+[36m@@ -0,0 +1,9 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.domain;[m
+[32m+[m
+[32m+[m[32mpublic class StudentOrder[m
+[32m+[m[32m{[m
+[32m+[m[32m    public String hFirstName;[m
+[32m+[m[32m    public String hLastName;[m
+[32m+[m[32m    public String wFirstName;[m
+[32m+[m[32m    public String wLastName;[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/mail/MailSender.java b/src/edu/vladix0777/studentorder/mail/MailSender.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c259bb9[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/mail/MailSender.java[m
+[36m@@ -0,0 +1,9 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.mail;[m
+[32m+[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.StudentOrder;[m
+[32m+[m
+[32m+[m[32mpublic class MailSender {[m
+[32m+[m[32m    public void sendMail(StudentOrder so) {[m
+[32m+[m[32m        System.out.println("Почта отправлена");[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/validator/ChildrenValidator.java b/src/edu/vladix0777/studentorder/validator/ChildrenValidator.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f5d7301[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/validator/ChildrenValidator.java[m
+[36m@@ -0,0 +1,12 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.validator;[m
+[32m+[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.AnswerChildren;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.StudentOrder;[m
+[32m+[m
+[32m+[m[32mpublic class ChildrenValidator {[m
+[32m+[m[32m    public AnswerChildren checkChildren(StudentOrder so) {[m
+[32m+[m[32m        System.out.println("Children Check is is running");[m
+[32m+[m[32m        AnswerChildren ansChi = new AnswerChildren();[m
+[32m+[m[32m        return ansChi;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/validator/CityRegisterValidator.java b/src/edu/vladix0777/studentorder/validator/CityRegisterValidator.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1b644aa[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/validator/CityRegisterValidator.java[m
+[36m@@ -0,0 +1,17 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.validator;[m
+[32m+[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.AnswerCityRegister;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.StudentOrder;[m
+[32m+[m
+[32m+[m[32mpublic class CityRegisterValidator {[m
+[32m+[m
+[32m+[m[32m    public String hostName;[m
+[32m+[m[32m    public String login;[m
+[32m+[m[32m    public String password;[m
+[32m+[m
+[32m+[m[32m    public AnswerCityRegister checkCityRegister(StudentOrder so) {[m
+[32m+[m[32m        System.out.println("CityRegister is running:" + hostName +","+login+","+password);[m
+[32m+[m[32m        AnswerCityRegister ansReg = new AnswerCityRegister();[m
+[32m+[m[32m        return ansReg;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/validator/StudentValidator.java b/src/edu/vladix0777/studentorder/validator/StudentValidator.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ea2070b[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/validator/StudentValidator.java[m
+[36m@@ -0,0 +1,12 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.validator;[m
+[32m+[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.AnswerStudent;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.StudentOrder;[m
+[32m+[m
+[32m+[m[32mpublic class StudentValidator {[m
+[32m+[m[32m    public static AnswerStudent checkStudent(StudentOrder so) {[m
+[32m+[m[32m        System.out.println("Student is running");[m
+[32m+[m[32m        AnswerStudent ansStu = new AnswerStudent();[m
+[32m+[m[32m        return ansStu;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/edu/vladix0777/studentorder/validator/WeddingValidator.java b/src/edu/vladix0777/studentorder/validator/WeddingValidator.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2251da8[m
+[1m--- /dev/null[m
+[1m+++ b/src/edu/vladix0777/studentorder/validator/WeddingValidator.java[m
+[36m@@ -0,0 +1,12 @@[m
+[32m+[m[32mpackage edu.vladix0777.studentorder.validator;[m
+[32m+[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.AnswerWedding;[m
+[32m+[m[32mimport edu.vladix0777.studentorder.domain.StudentOrder;[m
+[32m+[m
+[32m+[m[32mpublic class WeddingValidator {[m
+[32m+[m[32m    public static AnswerWedding checkWedding(StudentOrder so) {[m
+[32m+[m[32m        System.out.println("Wedding is running");[m
+[32m+[m[32m        AnswerWedding ansWed = new AnswerWedding();[m
+[32m+[m[32m        return ansWed;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/student-project.iml b/student-project.iml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c90834f[m
+[1m--- /dev/null[m
+[1m+++ b/student-project.iml[m
+[36m@@ -0,0 +1,11 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?>[m
+[32m+[m[32m<module type="JAVA_MODULE" version="4">[m
+[32m+[m[32m  <component name="NewModuleRootManager" inherit-compiler-output="true">[m
+[32m+[m[32m    <exclude-output />[m
+[32m+[m[32m    <content url="file://$MODULE_DIR$">[m
+[32m+[m[32m      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />[m
+[32m+[m[32m    </content>[m
+[32m+[m[32m    <orderEntry type="inheritedJdk" />[m
+[32m+[m[32m    <orderEntry type="sourceFolder" forTests="false" />[m
+[32m+[m[32m  </component>[m
+[32m+[m[32m</module>[m
+\ No newline at end of file[m

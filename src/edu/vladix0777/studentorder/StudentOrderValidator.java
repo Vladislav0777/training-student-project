@@ -28,27 +28,35 @@ public class StudentOrderValidator {
         studentOderVal.checkAll();
     }
     public void checkAll() {
+        StudentOrder[] soArray = readStudentOrders();
 
-        while (true) {
-            StudentOrder so = readStudentOrder();
-            System.out.println("start");
-            if(so == null){
-                break;
-            }
-            System.out.println("finish");
-            AnswerCityRegister citiAnswer = checkCityRegister(so);
-            AnswerWedding wedAnswer = checkWedding(so);
-            AnswerChildren childAnswer = checkChildren(so);
-            AnswerStudent studentAnswer = checkStudent(so);
-
-            sendMail(so);
+        for (int i = 0; i<soArray.length; i++) {
+            System.out.println();
+            checkOneOrder(soArray[i]);
         }
+//        for (StudentOrder so : soArray) {
+//            System.out.println();
+//            checkOneOrder(so);
+    }
+    public StudentOrder[] readStudentOrders() {
+        StudentOrder[] soArray = new StudentOrder[5];
+
+        for (int i = 0; i<soArray.length; i++) {
+            soArray[i] = SaveStudentOrder.buildStudentOrder(i);
+        }
+
+        return soArray;
+    }
+    public void checkOneOrder(StudentOrder so){
+        AnswerCityRegister citiAnswer = checkCityRegister(so);
+        AnswerWedding wedAnswer = checkWedding(so);
+        AnswerChildren childAnswer = checkChildren(so);
+        AnswerStudent studentAnswer = checkStudent(so);
+
+        sendMail(so);
     }
 
-    public StudentOrder readStudentOrder() {
-        StudentOrder so = new StudentOrder();
-        return so;
-    }
+
     public AnswerCityRegister checkCityRegister (StudentOrder so) {
         return cityRegisterValidator.checkCityRegister(so);
     }

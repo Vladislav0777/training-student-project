@@ -1,5 +1,6 @@
 package edu.vladix0777.studentorder.domain;
 
+import javax.xml.crypto.Data;
 import java.util.Date;
 
 public class Adult extends Person{
@@ -10,9 +11,13 @@ public class Adult extends Person{
     private String university;
     private String studentId;
 
-    public Adult () {
-
+    public Adult() {
     }
+
+    public Adult(String surName, String givenName, String patronymic, Data dateOrBirth) {
+        super(surName, givenName, patronymic, dateOrBirth);
+    }
+
 
     public String getStudentId() {
         return studentId;

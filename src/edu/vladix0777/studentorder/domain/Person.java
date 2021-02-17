@@ -1,10 +1,19 @@
 package edu.vladix0777.studentorder.domain;
 
-public class Person {
+import javax.xml.crypto.Data;
+
+public abstract class Person {
     private String surName;
     private String givenName;
     private String patronymic;
-    private String dateOrBirth;
+    private Data dateOrBirth;
+
+    public Person(String surName, String givenName, String patronymic, Data dateOrBirth) {
+        this.surName = surName;
+        this.givenName = givenName;
+        this.patronymic = patronymic;
+        this.dateOrBirth = dateOrBirth;
+    }
 
     public Person() {
         System.out.println("Person is created");
@@ -38,11 +47,11 @@ public class Person {
         this.patronymic = patronymic;
     }
 
-    public String getDateOrBirth() {
+    public Data getDateOrBirth() {
         return dateOrBirth;
     }
 
-    public void setDateOrBirth(String dateOrBirth) {
+    public void setDateOrBirth(Data dateOrBirth) {
         this.dateOrBirth = dateOrBirth;
     }
 }
