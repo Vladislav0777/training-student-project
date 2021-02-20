@@ -1,12 +1,13 @@
 package edu.vladix0777.studentorder.domain;
 
 import javax.xml.crypto.Data;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Adult extends Person{
     private String passportSeria;
     private String passportNumber;
-    private Date issueDate;
+    private LocalDate issueDate;
     private String issueDepartment;
     private String university;
     private String studentId;
@@ -14,7 +15,7 @@ public class Adult extends Person{
     public Adult() {
     }
 
-    public Adult(String surName, String givenName, String patronymic, Data dateOrBirth) {
+    public Adult(String surName, String givenName, String patronymic, LocalDate dateOrBirth) {
         super(surName, givenName, patronymic, dateOrBirth);
     }
 
@@ -35,11 +36,11 @@ public class Adult extends Person{
         this.university = university;
     }
 
-    public String getPassporSeria() {
+    public String getPassportSeria() {
         return passportSeria;
     }
 
-    public void setPassporSeria(String passporSeria) {
+    public void setPassportSeria(String passporSeria) {
         this.passportSeria = passporSeria;
     }
 
@@ -51,11 +52,11 @@ public class Adult extends Person{
         this.passportNumber = passportNumber;
     }
 
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 

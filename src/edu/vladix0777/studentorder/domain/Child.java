@@ -1,11 +1,14 @@
 package edu.vladix0777.studentorder.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Child extends Person{
     private String certificateNumber;
-    private Date issueDate;
+    private LocalDate issueDate;
     private String issueDepartment;
+
+    public Child(String петрова, String ирина, String викторовна, LocalDate of) {
+    }
 
     public String getCertificateNumber() {
         return certificateNumber;
@@ -15,11 +18,11 @@ public class Child extends Person{
         this.certificateNumber = certificateNumber;
     }
 
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 

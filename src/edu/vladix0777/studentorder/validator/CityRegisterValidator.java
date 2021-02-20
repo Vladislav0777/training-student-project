@@ -4,6 +4,8 @@ import edu.vladix0777.studentorder.domain.AnswerCityRegister;
 import edu.vladix0777.studentorder.domain.CityRegisterCheckerResponse;
 import edu.vladix0777.studentorder.domain.StudentOrder;
 import edu.vladix0777.studentorder.exception.CityRegisterException;
+import edu.vladix0777.studentorder.validator.register.CityRegisterChecker;
+import edu.vladix0777.studentorder.validator.register.FakeCityRegisterChecker;
 
 public class CityRegisterValidator {
 

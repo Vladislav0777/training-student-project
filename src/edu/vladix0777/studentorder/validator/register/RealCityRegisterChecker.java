@@ -1,4 +1,4 @@
-package edu.vladix0777.studentorder.validator;
+package edu.vladix0777.studentorder.validator.register;
 
 import edu.vladix0777.studentorder.domain.CityRegisterCheckerResponse;
 import edu.vladix0777.studentorder.domain.Person;

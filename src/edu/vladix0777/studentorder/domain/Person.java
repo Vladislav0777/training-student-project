@@ -1,14 +1,15 @@
 package edu.vladix0777.studentorder.domain;
 
 import javax.xml.crypto.Data;
+import java.time.LocalDate;
 
 public abstract class Person {
     private String surName;
     private String givenName;
     private String patronymic;
-    private Data dateOrBirth;
+    private LocalDate dateOrBirth;
 
-    public Person(String surName, String givenName, String patronymic, Data dateOrBirth) {
+    public Person(String surName, String givenName, String patronymic, LocalDate dateOrBirth) {
         this.surName = surName;
         this.givenName = givenName;
         this.patronymic = patronymic;
@@ -47,11 +48,11 @@ public abstract class Person {
         this.patronymic = patronymic;
     }
 
-    public Data getDateOrBirth() {
+    public LocalDate getDateOrBirth() {
         return dateOrBirth;
     }
 
-    public void setDateOrBirth(Data dateOrBirth) {
+    public void setDateOrBirth(LocalDate dateOrBirth) {
         this.dateOrBirth = dateOrBirth;
     }
 }
