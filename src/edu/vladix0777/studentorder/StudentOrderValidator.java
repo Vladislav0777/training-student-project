@@ -29,17 +29,12 @@ public class StudentOrderValidator {
     }
     public void checkAll() {
         StudentOrder[] soArray = readStudentOrders();
-
-        for (int i = 0; i<soArray.length; i++) {
-            System.out.println();
-            checkOneOrder(soArray[i]);
+        for (StudentOrder so : soArray) {
+            checkOneOrder(so);
         }
-//        for (StudentOrder so : soArray) {
-//            System.out.println();
-//            checkOneOrder(so);
     }
     public StudentOrder[] readStudentOrders() {
-        StudentOrder[] soArray = new StudentOrder[5];
+        StudentOrder[] soArray = new StudentOrder[1];
 
         for (int i = 0; i<soArray.length; i++) {
             soArray[i] = SaveStudentOrder.buildStudentOrder(i);
