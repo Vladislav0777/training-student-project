@@ -1,7 +1,7 @@
 package edu.vladix0777.studentorder.validator;
 
-import edu.vladix0777.studentorder.domain.AnswerCityRegister;
-import edu.vladix0777.studentorder.domain.CityRegisterCheckerResponse;
+import edu.vladix0777.studentorder.domain.register.AnswerCityRegister;
+import edu.vladix0777.studentorder.domain.register.CityRegisterCheckerResponse;
 import edu.vladix0777.studentorder.domain.StudentOrder;
 import edu.vladix0777.studentorder.exception.CityRegisterException;
 import edu.vladix0777.studentorder.validator.register.CityRegisterChecker;

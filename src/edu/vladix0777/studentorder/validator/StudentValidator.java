@@ -1,6 +1,6 @@
 package edu.vladix0777.studentorder.validator;
 
-import edu.vladix0777.studentorder.domain.AnswerStudent;
+import edu.vladix0777.studentorder.domain.student.AnswerStudent;
 import edu.vladix0777.studentorder.domain.StudentOrder;
 
 public class StudentValidator {

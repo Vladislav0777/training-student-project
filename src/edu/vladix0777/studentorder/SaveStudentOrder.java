@@ -23,9 +23,9 @@ public class SaveStudentOrder
     public static StudentOrder buildStudentOrder(long id) {
         StudentOrder so = new StudentOrder();
         so.setStudentOrderId(id);
-  //      so.setMarriageCertificateId("" + (123456000 + id));
-    //    so.setMarriageDate(LocalDate.of(2016, 7, 4));
-   //     so.setMarriageOffice("Отдел ЗАГС");
+        so.setMarriageCertificateId("" + (123456000 + id));
+        so.setMarriageDate(LocalDate.of(2016, 7, 4));
+        so.setMarriageOffice("Отдел ЗАГС");
 
   //      Address address = new Address("195000", "street", "12", "", "142");
 
@@ -49,14 +49,14 @@ public class SaveStudentOrder
 
         // Ребенок
         Child child = new Child("Петрова", "Ирина", "Викторовна", LocalDate.of(2018, 6, 29));
-        child.setCertificateNumber("" + (300000 + id));
+        child.setCertificateNumber("" + (300000 + id));Москва
         child.setIssueDate(LocalDate.of(1998, 6, 12));
         child.setIssueDepartment("Otdel ZAGS #" + id);
     //    child.setAddress(address);
 
         so.setHusband(husband);
         so.setWife(wife);
-     //  so.addChild(child1);
+     //   so.addChild(child1);
      //   so.addChild(child2);
 
         return so;

@@ -1,4 +1,4 @@
-package edu.vladix0777.studentorder.domain;
+package edu.vladix0777.studentorder.domain.register;
 
 public class CityRegisterCheckerResponse {
     private boolean existing;

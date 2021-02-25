@@ -1,6 +1,10 @@
 package edu.vladix0777.studentorder;
 
 import edu.vladix0777.studentorder.domain.*;
+import edu.vladix0777.studentorder.domain.children.AnswerChildren;
+import edu.vladix0777.studentorder.domain.register.AnswerCityRegister;
+import edu.vladix0777.studentorder.domain.student.AnswerStudent;
+import edu.vladix0777.studentorder.domain.wedding.AnswerWedding;
 import edu.vladix0777.studentorder.mail.MailSender;
 import edu.vladix0777.studentorder.validator.ChildrenValidator;
 import edu.vladix0777.studentorder.validator.CityRegisterValidator;
