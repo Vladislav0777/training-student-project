@@ -8,6 +8,7 @@ public abstract class Person {
     private String givenName;
     private String patronymic;
     private LocalDate dateOrBirth;
+    private Address address;
 
     public Person(String surName, String givenName, String patronymic, LocalDate dateOrBirth) {
         this.surName = surName;
@@ -55,4 +56,8 @@ public abstract class Person {
     public void setDateOrBirth(LocalDate dateOrBirth) {
         this.dateOrBirth = dateOrBirth;
     }
+
+    public Address getAddress() { return address; }
+
+    public void setAddress(Address address) { this.address = address; }
 }

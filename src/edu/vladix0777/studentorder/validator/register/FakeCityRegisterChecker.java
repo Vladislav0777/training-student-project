@@ -2,9 +2,10 @@ package edu.vladix0777.studentorder.validator.register;
 
 import edu.vladix0777.studentorder.domain.Adult;
 import edu.vladix0777.studentorder.domain.Child;
-import edu.vladix0777.studentorder.domain.register.CityRegisterCheckerResponse;
+import edu.vladix0777.studentorder.domain.register.CityRegisterResponse;
 import edu.vladix0777.studentorder.domain.Person;
 import edu.vladix0777.studentorder.exception.CityRegisterException;
+import edu.vladix0777.studentorder.exception.TransportException;
 
 public class FakeCityRegisterChecker implements CityRegisterChecker
 {
@@ -14,11 +15,13 @@ public class FakeCityRegisterChecker implements CityRegisterChecker
     private static final String BAD_2 = "2001";
     private static final String ERROR = "1002";
     private static final String ERROR_2 = "2002";
+    private static final String ERROR_T = "1003";
+    private static final String ERROR_T_2 = "2003";
 
-    public CityRegisterCheckerResponse checkPerson(Person person)
-            throws CityRegisterException {
+    public CityRegisterResponse checkPerson(Person person)
+            throws CityRegisterException, TransportException {
 
-        CityRegisterCheckerResponse res = new CityRegisterCheckerResponse();
+        CityRegisterResponse res = new CityRegisterResponse();
 
         if (person instanceof Adult) {
             Adult t = (Adult) person;
@@ -31,7 +34,13 @@ public class FakeCityRegisterChecker implements CityRegisterChecker
                 res.setExisting(false);
             }
             if(ps.equals(ERROR)||ps.equals(ERROR_2)) {
-                CityRegisterException ex = new CityRegisterException("Fake_error");
+                CityRegisterException ex =
+                        new CityRegisterException("1111", "GRN Fake_error" + ps);
+                throw ex;
+            }
+            if(ps.equals(ERROR_T)||ps.equals(ERROR_T_2)) {
+                TransportException ex =
+                        new TransportException("Transpor Error" + ps);
                 throw ex;
             }
         }

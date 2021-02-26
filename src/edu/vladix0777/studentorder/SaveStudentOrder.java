@@ -1,5 +1,6 @@
 package edu.vladix0777.studentorder;
 
+import edu.vladix0777.studentorder.domain.Address;
 import edu.vladix0777.studentorder.domain.Adult;
 import edu.vladix0777.studentorder.domain.Child;
 import edu.vladix0777.studentorder.domain.StudentOrder;
@@ -27,7 +28,7 @@ public class SaveStudentOrder
         so.setMarriageDate(LocalDate.of(2016, 7, 4));
         so.setMarriageOffice("Отдел ЗАГС");
 
-  //      Address address = new Address("195000", "street", "12", "", "142");
+        Address address = new Address("195000", "street", "12", "", "142");
 
         // Муж
         Adult husband = new Adult("Петров", "Виктор", "Сергеевич", LocalDate.of(1997, 8, 24));
@@ -36,7 +37,7 @@ public class SaveStudentOrder
         husband.setIssueDate(LocalDate.of(2017, 9, 15));
         husband.setIssueDepartment("Policia #" + id);
         husband.setStudentId("" + (100000 + id));
-    //    husband.setAddress(address);
+        husband.setAddress(address);
 
         // Жена
         Adult wife = new Adult("Петрова", "Вероника", "Алекссевна", LocalDate.of(1998, 3, 12));
@@ -45,19 +46,24 @@ public class SaveStudentOrder
         wife.setIssueDate(LocalDate.of(1997, 8, 24));
         wife.setIssueDepartment("Policia #" + id);
         wife.setStudentId("" + (200000 + id));
-    //    wife.setAddress(address);
+        wife.setAddress(address);
 
-        // Ребенок
-        Child child = new Child("Петрова", "Ирина", "Викторовна", LocalDate.of(2018, 6, 29));
-        child.setCertificateNumber("" + (300000 + id));Москва
-        child.setIssueDate(LocalDate.of(1998, 6, 12));
-        child.setIssueDepartment("Otdel ZAGS #" + id);
-    //    child.setAddress(address);
+        // Ребенок1
+        Child child1 = new Child("Петрова", "Ирина", "Викторовна", LocalDate.of(2018, 6, 29));
+        child1.setCertificateNumber("" + (300000 + id));
+        child1.setIssueDate(LocalDate.of(1998, 6, 12));
+        child1.setIssueDepartment("Otdel ZAGS #" + id);
+        // Ребенок2
+        Child child2 = new Child("Петров", "Крисс", "Викторович", LocalDate.of(2018, 6, 29));
+        child2.setCertificateNumber("" + (400000 + id));
+        child2.setIssueDate(LocalDate.of(1998, 3, 21));
+        child2.setIssueDepartment("Otdel ZAGS #" + id);
+        child2.setAddress(address);
 
         so.setHusband(husband);
         so.setWife(wife);
-     //   so.addChild(child1);
-     //   so.addChild(child2);
+        so.addChild(child1);
+        so.addChild(child2);
 
         return so;
     }

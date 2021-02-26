@@ -11,6 +11,9 @@ import edu.vladix0777.studentorder.validator.CityRegisterValidator;
 import edu.vladix0777.studentorder.validator.StudentValidator;
 import edu.vladix0777.studentorder.validator.WeddingValidator;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class StudentOrderValidator {
 
     private CityRegisterValidator cityRegisterValidator;
@@ -32,27 +35,29 @@ public class StudentOrderValidator {
         studentOderVal.checkAll();
     }
     public void checkAll() {
-        StudentOrder[] soArray = readStudentOrders();
-        for (StudentOrder so : soArray) {
+        List<StudentOrder> soList = readStudentOrders();
+
+        for (StudentOrder so : soList) {
             checkOneOrder(so);
         }
     }
-    public StudentOrder[] readStudentOrders() {
-        StudentOrder[] soArray = new StudentOrder[1];
+    public List<StudentOrder> readStudentOrders() {
+        List<StudentOrder> soList = new LinkedList<>();
 
-        for (int i = 0; i<soArray.length; i++) {
-            soArray[i] = SaveStudentOrder.buildStudentOrder(i);
+        for (int i = 0; i<5; i++) {
+            StudentOrder so = SaveStudentOrder.buildStudentOrder(i);
+            soList.add(so);
         }
 
-        return soArray;
+        return soList;
     }
     public void checkOneOrder(StudentOrder so){
         AnswerCityRegister citiAnswer = checkCityRegister(so);
-        AnswerWedding wedAnswer = checkWedding(so);
-        AnswerChildren childAnswer = checkChildren(so);
-        AnswerStudent studentAnswer = checkStudent(so);
+ //       AnswerWedding wedAnswer = checkWedding(so);
+ //       AnswerChildren childAnswer = checkChildren(so);
+ //       AnswerStudent studentAnswer = checkStudent(so);
 
-        sendMail(so);
+ //       sendMail(so);
     }
 
 
