@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-//public class StudentOrder
+public class StudentOrder
 {
     private long studentOrderId;
     private Adult husband;
