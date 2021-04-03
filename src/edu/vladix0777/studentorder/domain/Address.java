@@ -7,7 +7,7 @@ public class Address {
     private String apartment;
     private String postCode;
     private Address address;
-
+    private
     public Address(){
     }
     public Address(String building, String street, String extension, String apartment, String postCode) {
