@@ -4,8 +4,10 @@ public class Street
 {
     private Long streetCode;
     private String streetName;
+
     public Street() {
     }
+
     public Street(Long streetCode, String streetName) {
         this.streetCode = streetCode;
         this.streetName = streetName;

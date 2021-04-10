@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS jc_student_child;
-DROP TABLE IF EXISTS jc_student_order
+DROP TABLE IF EXISTS jc_student_order;
 DROP TABLE IF EXISTS jc_passport_office;
 DROP TABLE IF EXISTS jc_register_office;
 DROP TABLE IF EXISTS jc_country_struct;
@@ -36,9 +36,13 @@ CREATE TABLE jc_register_office
     PRIMARY KEY (r_office_id),
     FOREIGN KEY (r_office_area_id) REFERENCES jc_country_struct(area_id) ON DELETE RESTRICT
 );
+
+
 CREATE TABLE jc_student_order
 (
     student_order_id SERIAL,
+    student_order_status int not null,
+    student_order_date timestamp not null,
     h_sur_name varchar(100) not null,
     h_given_name varchar(100) not null,
     h_patronymic varchar(100) not null,
@@ -93,5 +97,4 @@ CREATE TABLE jc_student_child
     PRIMARY KEY (student_child_id),
     FOREIGN KEY (c_street_code) REFERENCES jc_street(street_code) ON DELETE RESTRICT,
     FOREIGN KEY (c_register_office_id) REFERENCES jc_register_office(r_office_id) ON DELETE RESTRICT
-
 );
