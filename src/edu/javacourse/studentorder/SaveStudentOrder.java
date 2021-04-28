@@ -1,6 +1,8 @@
 package edu.javacourse.studentorder;
 
 import edu.javacourse.studentorder.dao.DictionaryDaoImpl;
+import edu.javacourse.studentorder.dao.StudentOrderDaoImpl;
+import edu.javacourse.studentorder.dao.StudentOrderDao;
 import edu.javacourse.studentorder.domain.*;
 
 import java.time.LocalDate;
@@ -42,8 +44,10 @@ public class SaveStudentOrder
 
 
 
-//        StudentOrder s = buildStudentOrder(10);
-//        StudentOrder so = new StudentOrder();
+        StudentOrder s = buildStudentOrder(10);
+        StudentOrderDao dao = new StudentOrderDaoImpl();
+        Long id = dao.saveStudentOrder(s);
+        System.out.println(id);
 //        long ans = saveStudentOrder(so);
 //        System.out.println(ans);
     }
